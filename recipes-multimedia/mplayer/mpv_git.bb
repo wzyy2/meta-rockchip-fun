@@ -8,8 +8,8 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=91f1cb870c1cc2d31351a4d2595441cb"
 
 SRCREV = "${AUTOREV}"
-SRC_URI = "git://github.com/wzyy2/mpv.git;branch=rockchip \
-           http://www.freehackers.org/~tnagy/release/waf-1.8.12;name=waf;subdir=${BPN}-${PV} \
+SRC_URI = "git://github.com/LongChair/mpv.git;branch=rockchip \
+           http://www.freehackers.org/~tnagy/release/waf-1.8.12;name=waf; \
 "
 S = "${WORKDIR}/git"
 
@@ -25,6 +25,8 @@ PACKAGECONFIG[libass] = "--enable-libass,--disable-libass,libass"
 PACKAGECONFIG[libarchive] = "--enable-libarchive,--disable-libarchive,libarchive"
 PACKAGECONFIG[jack] = "--enable-jack, --disable-jack, jack"
 
+DEPENDS = "mesa fake-gl rockchip-mpp ffmpeg"
+
 SIMPLE_TARGET_SYS = "${@'${TARGET_SYS}'.replace('${TARGET_VENDOR}', '')}"
 EXTRA_OECONF = " \
     --prefix=${prefix} \
@@ -39,19 +41,18 @@ EXTRA_OECONF = " \
     --disable-dvdread \
     --disable-dvdnav \
     --disable-cdda \
-    --disable-enca \
-    --disable-libguess \
     --disable-uchardet \
     --disable-rubberband \
     --disable-lcms2 \
     --disable-vapoursynth \
     --disable-vapoursynth-lazy \
+    --disable-cuda-hwaccel \
     ${PACKAGECONFIG_CONFARGS} \
 "
 
 do_configure_prepend () {
-    ln -sf waf-1.8.12 ${WORKDIR}/waf
-    chmod +x ${WORKDIR}/waf
+    ln -sf ${WORKDIR}/waf-1.8.12 ${S}/waf
+    chmod +x ${S}/waf
 }
 
 FILES_${PN} += "${datadir}/icons"
