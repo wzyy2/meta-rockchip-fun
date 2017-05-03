@@ -16,6 +16,5 @@ CORE_IMAGE_EXTRA_INSTALL += " \
 	glmark2 \
 	cpufrequtils \
 	usbutils \
-	kf5-world \
-	polkit-qt-1 \
+	plasma-world \
 "
